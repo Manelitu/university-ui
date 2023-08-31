@@ -21,6 +21,7 @@ export class AuthTokenService {
   }
 
   public isValidToken(token: string): boolean {
+    if (!token) return false;
     return this.authService.isTokenExpired(token);
   }
 }
