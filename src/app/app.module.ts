@@ -9,14 +9,15 @@ import { PasswordModule } from 'primeng/password';
 import { MessagesModule   } from 'primeng/messages';
 import { JwtModule, } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { PagesModule } from './pages/pages.module';
 import { RoutingModule } from './pages/route.module';
 import { ComponentsModule } from './components/components.module';
+import { AuthGuard } from './guard/auth.guard';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,7 @@ import { ComponentsModule } from './components/components.module';
       },
     })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
