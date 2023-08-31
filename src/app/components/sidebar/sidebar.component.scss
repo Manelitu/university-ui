@@ -24,6 +24,12 @@ body{
   background: #eaeef6;
   font-family: 'Open Sans', sans-serif;
 }
+
+.outlet {
+  margin-left: $spacer * 10;
+  margin-top: $spacer;
+}
+
 .navbar{
   $ref: &;
   position: fixed;
