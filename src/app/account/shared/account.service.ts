@@ -24,6 +24,6 @@ export class AccountService {
 }
 
 export interface LoginParams {
-  login: string;
-  password: string;
+  login?: string;
+  password?: string;
 }
