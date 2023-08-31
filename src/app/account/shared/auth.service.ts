@@ -19,4 +19,8 @@ export class AuthTokenService {
       return null;
     }
   }
+
+  public isValidToken(token: string): boolean {
+    return this.authService.isTokenExpired(token);
+  }
 }
