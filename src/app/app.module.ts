@@ -11,7 +11,7 @@ import { JwtModule, } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { PagesModule } from './pages/pages.module';
-import { RoutingModule } from './pages/route.modules';
+import { RoutingModule } from './pages/route.module';
 import { ComponentsModule } from './components/components.module';
 @NgModule({
   declarations: [
