@@ -12,10 +12,16 @@ export class AccountService {
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('token');
-    this.headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+    if (token) {
+      this.headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+    } else {
+      this.headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+    }
   }
 
   public login(params: LoginParams): Observable<any> {
