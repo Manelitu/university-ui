@@ -3,10 +3,11 @@ import { Route, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './layout/home/home.component';
 
-const login: Route = { path: '', component: LoginComponent };
-
 const routes: Routes = [
-  { path: '', component: LoginComponent, children: [login]}
+  { 
+    path: '',
+    loadChildren: () => import('./pages/pages.module').then(p => p.PagesModule)
+  }
 ];
 
 @NgModule({
