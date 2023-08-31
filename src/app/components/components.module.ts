@@ -1,22 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './login/login.component';
-import { CreateAccountComponent } from '../account/create-account/create-account.component';
 import { HomeComponent } from '../layout/home/home.component';
 import { AuthenticationComponent } from '../layout/authentication/authentication.component';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    CreateAccountComponent,
     HomeComponent,
     AuthenticationComponent,
     SidebarComponent
   ],
-  imports: [CommonModule, ToastModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, ToastModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot([])],
   exports: [LoginComponent]
 })
 export class ComponentsModule { }
