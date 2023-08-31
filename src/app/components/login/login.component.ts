@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit  {
     });
   }
   
-
   submitIsValid() {
     return this.form.valid;
   }
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit  {
       setStorage('token', response.token);
       this.token = response.token;
       this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Logado com sucesso."});
-      this.route.navigate(["home"]);
+      this.route.navigate(["app"]);
     },
     error => {
       if (error.status === 400) {
