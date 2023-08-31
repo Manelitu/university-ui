@@ -25,10 +25,25 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
 .outlet {
   margin-left: $spacer * 10;
   margin-top: $spacer;
 }
+
+.logout {
+  position: absolute;
+  top: $spacer;
+  right: $spacer;
+}
+
 
 .navbar{
   $ref: &;
