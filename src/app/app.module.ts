@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './account/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { HomeComponent } from './layout/home/home.component';
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms'
-
+import { PasswordModule } from 'primeng/password';
+import { JwtModule, } from '@auth0/angular-jwt';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +28,15 @@ import { ReactiveFormsModule } from '@angular/forms'
     FormsModule,
     InputTextModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PasswordModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('token'),
+        allowedDomains: ['http://localhost:8080'],
+        disallowedRoutes: [],
+      },
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
