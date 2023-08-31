@@ -3,3 +3,5 @@ export const setStorage = (field: string, value: any): void => {
 }
 
 export const getStorage = (field: string): string | null => localStorage.getItem(field);
+
+export const removeStorage = (field: string): void => localStorage.removeItem(field);
