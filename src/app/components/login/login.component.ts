@@ -1,13 +1,15 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AccountService } from '@/app/account/shared/account.service';
-import { AuthTokenService } from '@/app/account/shared/auth.service';
+import { MessageService } from 'primeng/api';
 import { getStorage, setStorage } from '../../account/helpers/localstorage.utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers:[MessageService]
 })
 export class LoginComponent implements OnInit  {
   form: FormGroup = new FormGroup({});
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit  {
   constructor(
     private account: AccountService,
     private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private msg: MessageService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +32,7 @@ export class LoginComponent implements OnInit  {
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(5)
       ])
     });
   }
@@ -38,7 +41,7 @@ export class LoginComponent implements OnInit  {
   submitIsValid() {
     return this.form.valid;
   }
-  
+
   async login() {
     const credentials = {
       login: this.form.get('email')?.value,
@@ -48,8 +51,15 @@ export class LoginComponent implements OnInit  {
     this.account.login(credentials).subscribe(response => {
       setStorage('token', response.token);
       this.token = response.token;
-      this.cdr.detectChanges(); 
-    });
-    
+      this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Logado com sucesso."});
+      this.route.navigate(["home"]);
+    },
+    error => {
+      if (error.status === 400) {
+        this.msg.add({ severity: 'error', summary: 'Erro', detail: "Credenciais inválidas"});
+      } else {
+        this.msg.add({ severity: 'error', summary: 'Erro', detail: "Erro ao logar"});
+      }
+    });  
   }
 }

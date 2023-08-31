@@ -6,13 +6,15 @@ import { HomeComponent } from '../layout/home/home.component';
 import { AuthenticationComponent } from '../layout/authentication/authentication.component';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     CreateAccountComponent,
     HomeComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    SidebarComponent
   ],
   imports: [CommonModule, ToastModule, FormsModule, ReactiveFormsModule],
   exports: [LoginComponent]
