@@ -30,7 +30,7 @@
                 <textarea id="float-input" rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
               </div>
               <div class="card flex justify-content-center">
-                <p-splitButton (click)="saveDiscipline()" label="Salvar" icon="pi pi-plus" [model]="items"></p-splitButton>
+                <p-splitButton (click)="updateDiscipline(item.disciplineId)" label="Salvar" icon="pi pi-plus" [model]="items"></p-splitButton>
               </div>
             </p-panel>
         </ng-template>

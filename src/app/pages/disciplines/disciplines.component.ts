@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Disciplines, DisciplinesService } from './disciplines.service';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { OverlayPanel } from 'primeng/overlaypanel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-disciplines',
@@ -11,10 +12,10 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 })
 export class DisciplinesComponent implements OnInit {
   @ViewChild('op') op!: OverlayPanel;
+  private subscription: Subscription | undefined;
 
   public disciplines: Disciplines[] = [];
-  public discipline: Disciplines = {
-    disciplineId: '',
+  public discipline: Partial<Disciplines> = {
     name: '',
     hours: 0,
     description: '',
@@ -27,7 +28,8 @@ export class DisciplinesComponent implements OnInit {
 
   constructor(
     private disciplineService: DisciplinesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private msg: MessageService,
   ) {
     this.items = [
       {
@@ -74,8 +76,22 @@ export class DisciplinesComponent implements OnInit {
     op.toggle(event);
   }
 
-  saveDiscipline() {
-    console.log('salvar')
+  updateDiscipline(id: string) {
+    this.discipline = {
+      name: this.form.get('name')?.value,
+      hours: this.form.get('hours')?.value,
+      description: this.form.get('description')?.value,
+    }
+    this.disciplineService.updateDisciplineById(id, this.discipline).subscribe(
+      () => {
+        this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Disciplina salva com sucesso."});
+        this.disciplineService.listDisciplines().subscribe(resp => {
+          this.disciplines = resp;
+        });
+      },
+      (error) => this.msg.add({ severity: 'error', summary: 'Erro', detail: "Erro ao atualizar disciplina."})
+    );
   }
-  
 }
+  
+

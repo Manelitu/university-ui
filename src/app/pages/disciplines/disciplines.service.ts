@@ -19,6 +19,10 @@ export class DisciplinesService {
   public listDisciplineById(id: string): Observable<any> {
     return this.http.get(`${this.api_url}/discipline/${id}`);
   }
+
+  public updateDisciplineById(id: string, data: Partial<Disciplines>): Observable<any> {
+    return this.http.patch(`${this.api_url}/discipline/${id}`, data);
+  }
 }
 
 export interface Disciplines {
