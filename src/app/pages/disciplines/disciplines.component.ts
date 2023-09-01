@@ -12,9 +12,9 @@ import { Subscription } from 'rxjs';
 })
 export class DisciplinesComponent implements OnInit {
   @ViewChild('op') op!: OverlayPanel;
-  private subscription: Subscription | undefined;
-
+  public visible: boolean = false;
   public disciplines: Disciplines[] = [];
+  public disciplineId!: string;
   public discipline: Partial<Disciplines> = {
     name: '',
     hours: 0,
@@ -36,28 +36,28 @@ export class DisciplinesComponent implements OnInit {
           label: 'Atualizar',
           icon: 'pi pi-refresh',
           command: () => {
-            console.log('update');
+            this.updateDiscipline(this.disciplineId);
           }
       },
       {
           label: 'Deletar',
           icon: 'pi pi-times',
           command: () => {
-              console.log('delete');
+              this.deleteDiscipline(this.disciplineId);
           }
       },
     ];
-      this.form = this.formBuilder.group({
-        name: new FormControl('', [
-          Validators.required
-        ]),
-        hours: new FormControl('', [
-          Validators.required,
-        ]),
-        description: new FormControl('', [
-          Validators.required,
-        ]),
-      });
+    this.form = this.formBuilder.group({
+      name: new FormControl('', [
+        Validators.required
+      ]),
+      hours: new FormControl('', [
+        Validators.required,
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+      ]),
+    });
     
   }
   
@@ -72,11 +72,24 @@ export class DisciplinesComponent implements OnInit {
       this.form.get('name')?.setValue(resp.name);
       this.form.get('hours')?.setValue(resp.hours);
       this.form.get('description')?.setValue(resp.description);
+      this.disciplineId = resp.disciplineId;
     });
     op.toggle(event);
   }
 
-  updateDiscipline(id: string) {
+  deleteDiscipline(id: string): void {
+    this.disciplineService.deleteDisciplineById(id).subscribe(
+      () =>  {
+        this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Disciplina deletada com sucesso."})
+        this.disciplineService.listDisciplines().subscribe(resp => {
+          this.disciplines = resp;
+        });
+      },
+      (err) => this.msg.add({ severity: 'error', summary: 'Erro', detail: "Erro ao deletar a disciplina"})
+    )
+  }
+
+  updateDiscipline(id: string): void {
     this.discipline = {
       name: this.form.get('name')?.value,
       hours: this.form.get('hours')?.value,
@@ -91,6 +104,10 @@ export class DisciplinesComponent implements OnInit {
       },
       (error) => this.msg.add({ severity: 'error', summary: 'Erro', detail: "Erro ao atualizar disciplina."})
     );
+  }
+
+  openAddDisciplineModal() {
+    this.visible = true;
   }
 }
   

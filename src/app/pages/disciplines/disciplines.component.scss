@@ -20,3 +20,9 @@ $transition: $timing ease all;
 .p-inputgroup {
   margin: $spacer 0;
 }
+
+.button-add {
+  position: absolute;
+  bottom: $spacer * 1;
+  left: 50%;
+}

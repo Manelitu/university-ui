@@ -23,6 +23,10 @@ export class DisciplinesService {
   public updateDisciplineById(id: string, data: Partial<Disciplines>): Observable<any> {
     return this.http.patch(`${this.api_url}/discipline/${id}`, data);
   }
+
+  public deleteDisciplineById(id: string): Observable<any> {
+    return this.http.delete(`${this.api_url}/discipline/${id}`);
+  }
 }
 
 export interface Disciplines {

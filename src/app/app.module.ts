@@ -23,6 +23,7 @@ import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     CardModule,
     OverlayPanelModule,
     PanelModule,
+    DialogModule,
     SplitButtonModule,
     ReactiveFormsModule,
     InputTextareaModule,
