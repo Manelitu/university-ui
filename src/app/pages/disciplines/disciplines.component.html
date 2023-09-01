@@ -1,1 +1,42 @@
-<p>disciplines works!</p>
+<p-toast></p-toast>
+<div div class="card flex justify-content-center cards" *ngFor="let item of disciplines">
+  <p-card header="{{ item.name }}" subheader="Carga horária: {{ item.hours}}h" *ngIf="item.active">
+    <p>
+      {{ item.description }}
+    </p>
+    <ng-template pTemplate="footer">
+      <p-overlayPanel #op>
+        <ng-template pTemplate="content" [formGroup]="form">
+          <p-panel header="Dados da disciplina">
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-book"></i>
+                </span>
+                <input pInputText placeholder="Nome da disciplina" formControlName="name" />
+              </div>
+  
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-clock"></i>
+                </span>
+                <input type="text" pInputText placeholder="Carga horária" formControlName="hours" />
+                <span class="p-inputgroup-addon">h</span>
+              </div>
+  
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">
+                  <i class="pi pi-comment"></i>
+                </span>
+                <textarea id="float-input" rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
+              </div>
+              <div class="card flex justify-content-center">
+                <p-splitButton (click)="saveDiscipline()" label="Salvar" icon="pi pi-plus" [model]="items"></p-splitButton>
+              </div>
+            </p-panel>
+        </ng-template>
+      </p-overlayPanel>
+      <p-button (click)="getDisciplineById(item.disciplineId, op, $event)" label="Editar" icon="pi pi-file-edit"
+        styleClass="p-button-text mr-2 mb-2"></p-button>
+    </ng-template>
+  </p-card>
+</div>

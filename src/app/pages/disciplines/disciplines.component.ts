@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Disciplines, DisciplinesService } from './disciplines.service';
+import { MenuItem } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { OverlayPanel } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-disciplines',
@@ -7,14 +10,72 @@ import { Disciplines, DisciplinesService } from './disciplines.service';
   styleUrls: ['./disciplines.component.scss']
 })
 export class DisciplinesComponent implements OnInit {
-  public disciplines: Disciplines[] = [];
+  @ViewChild('op') op!: OverlayPanel;
 
-  constructor(private disciplineService: DisciplinesService) {}
+  public disciplines: Disciplines[] = [];
+  public discipline: Disciplines = {
+    disciplineId: '',
+    name: '',
+    hours: 0,
+    description: '',
+    active: true,
+  };
+
+  public layout: "list" | "grid" = 'list';
+  public items: MenuItem[] = [];
+  form: FormGroup = new FormGroup({});
+
+  constructor(
+    private disciplineService: DisciplinesService,
+    private formBuilder: FormBuilder
+  ) {
+    this.items = [
+      {
+          label: 'Atualizar',
+          icon: 'pi pi-refresh',
+          command: () => {
+            console.log('update');
+          }
+      },
+      {
+          label: 'Deletar',
+          icon: 'pi pi-times',
+          command: () => {
+              console.log('delete');
+          }
+      },
+    ];
+      this.form = this.formBuilder.group({
+        name: new FormControl('', [
+          Validators.required
+        ]),
+        hours: new FormControl('', [
+          Validators.required,
+        ]),
+        description: new FormControl('', [
+          Validators.required,
+        ]),
+      });
+    
+  }
   
   ngOnInit(): void {
     this.disciplineService.listDisciplines().subscribe(resp => {
       this.disciplines = resp;
     })
+  }
+  
+  getDisciplineById(id: string, op: OverlayPanel, event: any): void {
+    this.disciplineService.listDisciplineById(id).subscribe(resp => {
+      this.form.get('name')?.setValue(resp.name);
+      this.form.get('hours')?.setValue(resp.hours);
+      this.form.get('description')?.setValue(resp.description);
+    });
+    op.toggle(event);
+  }
+
+  saveDiscipline() {
+    console.log('salvar')
   }
   
 }

@@ -15,11 +15,16 @@ export class DisciplinesService {
   public listDisciplines(): Observable<any> {
     return this.http.get(`${this.api_url}/discipline`);
   }
+
+  public listDisciplineById(id: string): Observable<any> {
+    return this.http.get(`${this.api_url}/discipline/${id}`);
+  }
 }
 
 export interface Disciplines {
   disciplineId: string;
   name: string;
   hours: number;
+  description: string;
   active: boolean;
 }

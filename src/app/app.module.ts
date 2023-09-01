@@ -13,11 +13,21 @@ import { PagesModule } from './pages/pages.module';
 import { RoutingModule } from './pages/route.module';
 import { ComponentsModule } from './components/components.module';
 import { AuthGuard } from './guard/auth.guard';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component'
+import { CardModule } from 'primeng/card';
+import { DisciplinesComponent } from './pages/disciplines/disciplines.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    DisciplinesComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +41,13 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     PagesModule,
     RoutingModule,
     ComponentsModule,
+    CardModule,
+    OverlayPanelModule,
+    PanelModule,
+    SplitButtonModule,
+    ReactiveFormsModule,
+    InputTextareaModule,
+    ToastModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
@@ -39,7 +56,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
       },
     })
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,22 @@
+$borderRadius: 10px;
+$spacer: 1rem;
+$primary: #406ff3;
+$text: #6a778e;
+$linkHeight: $spacer * 3.5;
+$timing: 250ms;
+$transition: $timing ease all;
+
+.cards {
+  margin: $spacer;
+  max-width: $spacer * 30;
+}
+
+#ola {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.p-inputgroup {
+  margin: $spacer 0;
+}
