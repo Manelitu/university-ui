@@ -1,1 +1,57 @@
-<p>periods works!</p>
+<p-toast></p-toast>
+  <div class="w-full h-full flex flex-wrap gap-8">
+    <div *ngFor="let item of periods" class="w-80 div-card">
+      <p-card header="{{item.period}}" class="w-full h-full py-0">
+        <div class="container flex mx-auto w-full items-center justify-center">
+ 
+          <ul class="flex flex-col max-h-40 h-40 overflow-auto">
+               <a href="app/disciplines">
+                <li class="border-blue-300 flex flex-row mb-2" *ngFor="let disc of item.disciplines">
+                  <div class="select-none cursor-pointer bg-blue-200 rounded-md flex flex-1 items-center p-4  transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <div class="flex-1 pl-1 mr-16">
+                      <div class="font-medium">{{ disc.name}}</div>
+                      <div class="text-blue-500 text-sm"></div>
+                    </div>
+                    <div class="text-blue-500 text-xs"> {{ disc.hours }}h</div>
+                  </div>
+                </li>
+               </a>
+           </ul>
+           
+         </div>
+        <ng-template pTemplate="footer">
+          <p-overlayPanel #op>
+            <ng-template pTemplate="content">
+              <p-panel header="Dados do semestre" [formGroup]="form">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-book"></i>
+                    </span>
+                    <input pInputText pKeyFilter="int" placeholder="Digite qual o semestre" formControlName="period" />
+                  </div>
+                  <div class="card flex justify-end">
+                    <p-splitButton (onClick)="updatePeriod(item.periodId)" label="Salvar" icon="pi pi-plus" [model]="items"></p-splitButton>
+                  </div>
+              </p-panel>
+            </ng-template>
+          </p-overlayPanel>
+          <p-button (click)="getPeriodById(item.periodId, op, $event)" label="Editar" icon="pi pi-file-edit"
+            styleClass="p-button-text" class="my-0 py-0"></p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <p-button (onClick)="openAddDisciplineModal()" icon="pi pi-plus" class="button-add" styleClass="p-button-rounded" class="fixed left-[50%] bottom-5"></p-button>
+  <p-dialog header="Cadastrar semestre" [(visible)]="visible" [style]="{width: '50vw'}" [modal]="true" [breakpoints]="{ '960px': '75vw' }" [maximizable]="true">
+    <div class="p-inputgroup" [formGroup]="modalForm">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-book"></i>
+      </span>
+      <input pInputText placeholder="Semestre - Curso" formControlName="period" />
+    </div>
+    <p-dropdown appendTo="body" placeholder="Selecione um curso" [options]="courses" optionLabel="name" class="w-full" [(ngModel)]="course"></p-dropdown>
+
+    <div class="card flex justify-end">
+      <p-button label="Salvar" icon="pi pi-plus" (onClick)="createCourse()" [disabled]="!formIsValid()"></p-button>
+    </div>
+</p-dialog>
