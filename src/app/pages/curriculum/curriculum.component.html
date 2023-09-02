@@ -1,0 +1,29 @@
+<div class="card">
+  <ng-container *ngFor="let course of courses" class="table">
+    <p-table [value]="course.periods" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="caption">
+        <h2 class="font-bold">{{ course.name }}</h2>
+        <p class="font-thin">{{ course.description }}</p>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Período</th>
+          <th>Disciplinas</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-period>
+        <tr>
+          <td>{{ period.period }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let discipline of period.disciplines">
+                {{ discipline.name }} ({{ discipline.hours }} horas)
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary"/> 
+    </p-table>
+  </ng-container>
+</div>
