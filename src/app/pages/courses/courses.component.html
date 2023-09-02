@@ -1,1 +1,53 @@
-<p>courses works!</p>
+<p-toast></p-toast>
+  <div class="w-full h-full flex flex-wrap gap-8">
+    <div *ngFor="let item of courses" class="w-80">
+      <p-card header="{{ item.name }}" subheader="Duração do curso: {{ item.periods.length }} semestres" class="w-full h-full py-0">
+        <div class="w-full break-basic description">{{ item.description || "Sem descrição" }}</div>
+        <ng-template pTemplate="footer">
+          <p-overlayPanel #op>
+            <ng-template pTemplate="content">
+              <p-panel header="Dados do curso" [formGroup]="form">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-book"></i>
+                    </span>
+                    <input pInputText placeholder="Nome do curso" formControlName="name" />
+                  </div>
+  
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                      <i class="pi pi-comment"></i>
+                    </span>
+                    <textarea maxlength="200" id="float-input" rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
+                  </div>
+                  <div class="card flex justify-end">
+                    <p-splitButton (onClick)="updateCourse(item.name)" label="Salvar" icon="pi pi-plus" [model]="items"></p-splitButton>
+                  </div>
+              </p-panel>
+            </ng-template>
+          </p-overlayPanel>
+          <p-button (click)="getCourseByName(item.name, op, $event)" label="Editar" icon="pi pi-file-edit"
+            styleClass="p-button-text" class="my-0 py-0"></p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <p-button (onClick)="openAddDisciplineModal()" icon="pi pi-plus" class="button-add" styleClass="p-button-rounded" class="fixed left-[50%] bottom-5"></p-button>
+  <p-dialog header="Salvar nova curso" [(visible)]="visible" [style]="{width: '50vw'}" [modal]="true" [breakpoints]="{ '960px': '75vw' }" [maximizable]="true" [formGroup]="modalForm">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-book"></i>
+      </span>
+      <input pInputText placeholder="Nome do curso" formControlName="name" />
+    </div>
+
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-comment"></i>
+      </span>
+      <textarea maxlength="200" id="float-input" rows="5" cols="30" pInputTextarea formControlName="description"></textarea>
+    </div>
+    <div class="card flex justify-end">
+      <p-button label="Salvar" icon="pi pi-plus" (onClick)="createCourse()" [disabled]="!formIsValid()"></p-button>
+    </div>
+  </p-dialog>
