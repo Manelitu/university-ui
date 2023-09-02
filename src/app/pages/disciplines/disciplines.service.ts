@@ -20,6 +20,10 @@ export class DisciplinesService {
     return this.http.get(`${this.api_url}/discipline/${id}`);
   }
 
+  public createDiscipline(data: CreateDiscipline): Observable<any> {
+    return this.http.post(`${this.api_url}/discipline`, data);
+  }
+
   public updateDisciplineById(id: string, data: Partial<Disciplines>): Observable<any> {
     return this.http.patch(`${this.api_url}/discipline/${id}`, data);
   }
@@ -35,4 +39,11 @@ export interface Disciplines {
   hours: number;
   description: string;
   active: boolean;
+}
+
+export interface CreateDiscipline {
+  name: string;
+  hours: number;
+  description: string;
+  periodId: string;
 }

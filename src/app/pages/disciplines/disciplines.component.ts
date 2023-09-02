@@ -3,7 +3,7 @@ import { Disciplines, DisciplinesService } from './disciplines.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { Subscription } from 'rxjs';
+import { Periods, PeriodsService } from '../periods/periods.service';
 
 @Component({
   selector: 'app-disciplines',
@@ -14,6 +14,8 @@ export class DisciplinesComponent implements OnInit {
   @ViewChild('op') op!: OverlayPanel;
   public visible: boolean = false;
   public disciplines: Disciplines[] = [];
+  public periods: Periods[] = [];
+  public period!: Periods ;
   public disciplineId!: string;
   public discipline: Partial<Disciplines> = {
     name: '',
@@ -25,9 +27,11 @@ export class DisciplinesComponent implements OnInit {
   public layout: "list" | "grid" = 'list';
   public items: MenuItem[] = [];
   form: FormGroup = new FormGroup({});
+  modalForm: FormGroup = new FormGroup({});
 
   constructor(
     private disciplineService: DisciplinesService,
+    private periodService: PeriodsService,
     private formBuilder: FormBuilder,
     private msg: MessageService,
   ) {
@@ -58,6 +62,17 @@ export class DisciplinesComponent implements OnInit {
         Validators.required,
       ]),
     });
+    this.modalForm = this.formBuilder.group({
+      name: new FormControl('', [
+        Validators.required
+      ]),
+      hours: new FormControl('', [
+        Validators.required,
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+      ]),
+    });
     
   }
   
@@ -65,6 +80,27 @@ export class DisciplinesComponent implements OnInit {
     this.disciplineService.listDisciplines().subscribe(resp => {
       this.disciplines = resp;
     })
+
+    this.periodService.listPeriods().subscribe(resp => {
+      this.periods = resp;
+    })
+  }
+
+  saveDiscipline(): void {
+    const params = {
+      name: this.modalForm.get('name')?.value,
+      hours: Number(this.modalForm.get('hours')?.value),
+      description: this.modalForm.get('description')?.value,
+      periodId: this.period.periodId
+    }
+    this.disciplineService.createDiscipline(params).subscribe(() => {
+      this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Disciplina criada com sucesso."});
+      this.disciplineService.listDisciplines().subscribe(resp => {
+        this.disciplines = resp;
+      });
+      this.visible = false;
+    },
+    (error) => this.msg.add({ severity: 'error', summary: 'Erro', detail: "Erro ao salvar disciplina."}))
   }
   
   getDisciplineById(id: string, op: OverlayPanel, event: any): void {
@@ -108,6 +144,15 @@ export class DisciplinesComponent implements OnInit {
 
   openAddDisciplineModal() {
     this.visible = true;
+    this.modalForm.reset({
+      name: '',
+      hours: '',
+      description: ''
+    });
+  }
+
+  formIsValid(): boolean {
+    return this.modalForm.valid && !!this.period.periodId;
   }
 }
   
