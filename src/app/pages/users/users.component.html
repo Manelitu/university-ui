@@ -1,0 +1,72 @@
+<p-toast></p-toast>
+<div class="w-full h-full flex flex-wrap gap-8">
+  <div *ngFor="let item of users" class="w-96 div-card">
+    <p-card header="{{ item.name }}" subheader="Email: {{ item.email}}h" class="w-full h-full py-0  header">
+      <div class="w-full break-basic description">
+        Cadastrado em: {{ parseDate(item.createdAt) }}
+      </div>
+      <div class="w-full break-basic description">
+        Permissão: <b>{{ item.roles }}</b>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <p-overlayPanel #op>
+          <ng-template pTemplate="content">
+            <p-panel header="Dados do usuário">
+              <div [formGroup]="form">
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">
+                    <i class="pi pi-book"></i>
+                  </span>
+                  <input pInputText placeholder="Nome do usuário" formControlName="name" />
+                </div>
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">
+                    <i class="pi pi-book"></i>
+                  </span>
+                  <input pInputText placeholder="Email do usuário" formControlName="email" />
+                </div>
+              </div>
+                <div class="card flex justify-end">
+                  <p-splitButton (onClick)="updateUser(item.id)" label="Atualizar" icon="pi pi-plus" [model]="items"></p-splitButton>
+                </div>
+            </p-panel>
+
+          </ng-template>
+        </p-overlayPanel>
+        <p-button (click)="getUserById(item.id, op, $event)" label="Editar" icon="pi pi-file-edit"
+          styleClass="p-button-text mr-2 mb-2">
+        </p-button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+  <p-button (onClick)="openCreateModal()" icon="pi pi-plus" class="button-add" styleClass="p-button-rounded" class="fixed left-[50%] bottom-5"></p-button>
+  <p-dialog header="Salvar nova disciplina" [(visible)]="visible" [style]="{width: '50vw'}" [modal]="true" [breakpoints]="{ '960px': '75vw' }" [maximizable]="true">
+    <p-dropdown appendTo="body" [options]="roles" [(ngModel)]="selectedRole" optionLabel="name"></p-dropdown>
+    <div [formGroup]="modalForm">
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-book"></i>
+        </span>
+        <input pInputText placeholder="Nome do usuário" formControlName="name" />
+      </div>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-book"></i>
+        </span>
+        <input pInputText placeholder="Email do usuário" formControlName="email" />
+      </div>
+      <div class="p-inputgroup">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-book"></i>
+        </span>
+        <input pInputText placeholder="Senha do usuário" formControlName="password" />
+      </div>
+
+    </div>
+
+    <div class="card flex justify-end mt-4">
+      <p-button label="Salvar" icon="pi pi-plus" (onClick)="createUser()" [disabled]="!formIsValid()"></p-button>
+    </div>
+  </p-dialog>
