@@ -2,7 +2,7 @@
 <p-toast></p-toast>
 <main class="main-container">
 <div id="app" [formGroup]="form">
-  <div class="app-view">  
+  <div class="app-view" (keydown.enter)="login()">  
     <header class="app-header">
       <h1 style="color: #0F9EDE">University</h1>
       Seja bem vindo,<br/>

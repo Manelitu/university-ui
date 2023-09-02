@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit  {
       setStorage('token', response.token);
       this.token = response.token;
       this.msg.add({ severity: 'success', summary: 'Sucesso', detail: "Logado com sucesso."});
-      this.route.navigate(["app"]);
+      this.route.navigate(["home"]);
     },
     error => {
       if (error.status === 400) {
