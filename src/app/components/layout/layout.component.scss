@@ -2,5 +2,7 @@ $spacer: 1rem;
 
 .outlet {
   margin-left: $spacer * 10;
-  margin-top: $spacer;
+  width: calc(100% - $spacer * 10);
+  justify-content: flex-start;
+  margin-top: 6 * $spacer;
 }
