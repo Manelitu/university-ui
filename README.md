@@ -1,5 +1,7 @@
 # UnivesityUi
 
+https://university-ui-lime.vercel.app/
+
 
 ### Pré-requisitos
 
@@ -77,10 +79,6 @@ npm install
 
 > Caso utilizar a versão 7 do npm pode ocorrer erro de versão das dependências, neste caso utilize `npm install --legacy-peer-deps`.
 
-Caso prefira instalar com o yarn:
-```
-yarn install
-```
 
 ### Passo 2 - Rodar a aplicação
 
