@@ -20,6 +20,34 @@ export class AuthTokenService {
     }
   }
 
+  public isExpired(): boolean {
+    const token = localStorage.getItem('token') as string;
+    return this.authService.isTokenExpired(token);
+  }
+
+  public isAdmin(): boolean {
+    const token = this.getToken();
+    const payload = this.decodePayloadJWT(token as string);
+    return payload.roles === 'ADMIN';
+  }
+
+  public isCoordinator(): boolean {
+    const token = this.getToken();
+    const payload = this.decodePayloadJWT(token as string);
+    return (
+      payload.roles === 'COORDINATOR' 
+    );
+  }
+
+  public isUser(): boolean {
+    const token = this.getToken();
+    const payload = this.decodePayloadJWT(token as string);
+    return (
+      payload.roles === 'STUDENT'
+      || payload.roles === 'PROFESSOR'
+    );
+  }
+
   public isValidToken(token: string): boolean {
     if (!token) return false;
     return this.authService.isTokenExpired(token);
