@@ -21,14 +21,28 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DialogModule } from 'primeng/dialog';
+import { CoursesComponent } from './pages/courses/courses.component';
+import { PeriodsComponent } from './pages/periods/periods.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { CoordinatorGuard } from './guard/coordinator.guard';
+import { AdminGuard } from './guard/admin.guard';
+import { UserGuard } from './guard/user.guard';
+import { UsersComponent } from './pages/users/users.component';
+import { CurriculumComponent } from './pages/curriculum/curriculum.component';
+import { TableModule } from 'primeng/table';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    DisciplinesComponent
+    DisciplinesComponent,
+    CoursesComponent,
+    PeriodsComponent,
+    UsersComponent,
+    CurriculumComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +64,9 @@ import { DialogModule } from 'primeng/dialog';
     ReactiveFormsModule,
     InputTextareaModule,
     ToastModule,
+    FormsModule,
+    DropdownModule,
+    TableModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('token'),
@@ -58,7 +75,7 @@ import { DialogModule } from 'primeng/dialog';
       },
     })
   ],
-  providers: [AuthGuard, MessageService],
+  providers: [AuthGuard, MessageService, CoordinatorGuard, AdminGuard, UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
