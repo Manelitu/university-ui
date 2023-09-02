@@ -42,6 +42,7 @@ ul {
 
 .navbar{
   $ref: &;
+  margin-top: 5 * $spacer;
   position: fixed;
   top: $spacer;
   left: $spacer;
@@ -49,7 +50,8 @@ ul {
   border-radius: $borderRadius;
   padding: $spacer 0;
   box-shadow: 0 0 40px rgba(0,0,0,0.03);
-  height: calc(100vh - #{$spacer*4});
+  height: auto;
+  z-index: 99;
   &__link{
     position:relative;
     display: flex;
@@ -67,7 +69,8 @@ ul {
       opacity: 0;
       pointer-events: none;
       color: $primary;
-      background: #fff;
+      background: #406FF3;
+      color: #fff;
       padding: $spacer *0.75;
       transition: $transition;
       border-radius: $borderRadius * 1.75;
@@ -133,5 +136,21 @@ ul {
     }
 
   }
+
+  .navbar__item.disabled { 
+    cursor: not-allowed; 
+    pointer-events: none;
+  }
   
+
+  .navbar__item.disabled .navbar__link {
+    color: #ccc;
+    text-decoration: none;
+  }
+  
+  
+  .navbar__item.disabled i {
+    opacity: 0.5;
+    color: #ccc;
+  }
 }
